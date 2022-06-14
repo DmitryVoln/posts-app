@@ -1,0 +1,7 @@
+.pagination {
+  display: flex;
+  margin: 50px auto;
+  &__item {
+    justify-content: space-between;
+  }
+}
