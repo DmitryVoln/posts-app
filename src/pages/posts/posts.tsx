@@ -7,31 +7,49 @@ import styles from "./posts.module.scss";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
 import Pagination from "../../components/pagination/pagination";
+import Loader from "../../components/loader/loader";
 
 const cx = classNames.bind(styles);
 
 const Posts = ({
   postsList,
-  pageLimit,
   pagesCountArray,
   onClick,
   inputValue,
   handleInput,
-  handleButton,
+  handleButtonFind,
+  handleButtonClear,
   handlePagination,
+  pageNumber,
+  isLoading,
 }: IPostsComponent): JSX.Element => {
   return (
     <>
       <div className={cx("container")}>
-        {!postsList.length && <div className={cx("loader")}>грузится</div>}
+        {isLoading && (
+          <div className={cx("loader")}>
+            <Loader />
+          </div>
+        )}
         <div className={cx("posts")}>
-          <Button onClick={handleButton}>Найти</Button>
-          <Input inputValue={inputValue} onChange={handleInput}></Input>
+          <div className={cx("buttons")}>
+            <Input inputValue={inputValue} onChange={handleInput}></Input>
+            <Button onClick={handleButtonFind} btnClassName={"find"}>
+              Найти
+            </Button>
+            <Button onClick={handleButtonClear} btnClassName={"find"}>
+              Очистить поиск
+            </Button>
+          </div>
           {postsList.map(({ id, title, body }: IPosts) => {
             return (
               <ul key={id}>
-                <li>
-                  <Link to={`post/${id}`} onClick={() => onClick(id)}>
+                <li className={cx("list__item")}>
+                  <Link
+                    to={`post/${id}`}
+                    onClick={() => onClick(id)}
+                    className={cx("link")}
+                  >
                     {title}
                   </Link>
                   ;
@@ -40,7 +58,11 @@ const Posts = ({
             );
           })}
         </div>
-        <Pagination countPages={pagesCountArray} handlePagination={handlePagination}/>
+        <Pagination
+          activeProp={pageNumber}
+          countPages={pagesCountArray}
+          handlePagination={handlePagination}
+        />
       </div>
     </>
   );

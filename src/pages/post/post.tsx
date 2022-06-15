@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader/loader";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { requestPost } from "../../redux/reducers/actionCreators";
+import { clearState } from "../../redux/reducers/onePostSlice";
 import { IPost } from "../posts/posts.inteface";
 
 const Post = ({ id }: IPost): JSX.Element => {
   const [postBody, setPostBody] = useState<string>("");
   const [postTitle, setPostTitle] = useState<string>("");
 
-
   const {
+    isLoadind,
     postData: { body, title },
   } = useAppSelector((state) => state.onePostReducer);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(requestPost(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setPostBody(body);
@@ -24,7 +26,15 @@ const Post = ({ id }: IPost): JSX.Element => {
 
   return (
     <div className="">
-      <Link to="/">На главную</Link>
+      <Link
+        to="/"
+        onClick={() => {
+          dispatch(clearState());
+        }}
+      >
+        На главную
+      </Link>
+      {isLoadind && <Loader />}
       <div className="">{postTitle}</div>
       <div className="">{postBody}</div>
     </div>

@@ -33,7 +33,10 @@ export const onePostSlice = createSlice({
       state.isLoadind = false;
       state.error = action.payload;
     },
+    clearState() {
+      return initialState;
+    },
   },
 });
-
+export const { clearState } = onePostSlice.actions;
 export default onePostSlice.reducer;

@@ -2,3 +2,16 @@
   margin: auto;
   width: 1140px;
 }
+
+.list__item {
+  list-style-type: none;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}

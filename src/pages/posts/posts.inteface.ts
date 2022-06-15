@@ -9,13 +9,15 @@ export interface IPosts {
 
 export interface IPostsComponent {
   postsList: IPosts[];
-  pageLimit: number;
   pagesCountArray: number[];
   onClick(id: string): void;
   inputValue: string;
   handleInput(value: string): void;
-  handleButton(): void;
+  handleButtonFind(): void;
+  handleButtonClear(): void;
   handlePagination(value: number): void;
+  pageNumber: number;
+  isLoading: boolean;
 }
 
 export interface IPost {
